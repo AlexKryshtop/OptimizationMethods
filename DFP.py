@@ -194,7 +194,7 @@ class DFP:
         x1 = np.linspace(-5, 5)
         x2 = np.linspace(-5, 5)
         x1, x2 = np.meshgrid(x1, x2)
-        f0 = self.func(x1, x2)
+        f0 = (x1 - 2) ** 4 + (x1 - 2 * x2) ** 2
 
         fig, ax = plt.subplots(figsize=(12, 8))
         locator = ticker.SymmetricalLogLocator(linthresh=0.1, base=2)
@@ -216,18 +216,19 @@ class DFP:
 
         ax.plot(xs[:, 0], xs[:, 1], color='black', linewidth=4)
         picture = ax.contourf(x1, x2, f0, locator=locator)
+        ax.scatter(xs[-1, 0], xs[-1, 1], color='red')
         ax.set_xlabel('x1')
         ax.set_ylabel('x2')
         plt.show()
 
     def notebook_geom_process(self):
-        fig = plt.figure(figsize=(20,15))
+        fig = plt.figure(figsize=(20, 15))
         ax = fig.add_subplot(1, 1, 1)
 
         x1 = np.linspace(-2, 4)
         x2 = np.linspace(-2, 4)
         x1, x2 = np.meshgrid(x1, x2)
-        f0 = self.func(x1, x2)
+        f0 = (x1 - 2)**4 + (x1 - 2*x2)**2
         xs = np.array(self.y)
 
         locator = ticker.SymmetricalLogLocator(linthresh=0.1, base=2)
@@ -241,7 +242,7 @@ class DFP:
         clear_output(wait = True)
         plt.pause(0.5)
 
-        for i in range(1, dfp.n_iter):
+        for i in range(1, self.n_iter):
 
             ax.set_title('Iter: {}'.format(i),fontsize = 25)
             ax.plot(xs[i-1:i+1,0],xs[i-1:i+1,1], color='black', linewidth=4)
